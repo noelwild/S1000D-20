@@ -645,9 +645,14 @@ class AquilaApp {
     }
 
     updateContentArea() {
+        console.log('=== UPDATE CONTENT AREA ===');
         const contentArea = document.getElementById('contentArea');
+        console.log('Content area element:', contentArea);
+        console.log('Current module:', this.currentModule);
+        console.log('Is STE view:', this.isSTEView);
         
         if (!this.currentModule) {
+            console.log('No current module, showing placeholder');
             contentArea.innerHTML = `
                 <div class="h-full flex items-center justify-center text-gray-400">
                     <div class="text-center">
@@ -661,14 +666,21 @@ class AquilaApp {
         }
         
         const content = this.isSTEView ? this.currentModule.ste_content : this.currentModule.verbatim_content;
+        console.log('Content to display:', content);
+        
+        const formattedContent = this.formatContent(content);
+        console.log('Formatted content:', formattedContent);
         
         contentArea.innerHTML = `
             <div class="content-editor">
                 <div class="prose prose-invert max-w-none">
-                    ${this.formatContent(content)}
+                    ${formattedContent}
                 </div>
             </div>
         `;
+        
+        console.log('Content area updated');
+        console.log('=== END UPDATE CONTENT AREA ===');
     }
 
     formatContent(content) {
