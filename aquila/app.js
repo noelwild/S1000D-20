@@ -411,6 +411,9 @@ class AquilaApp {
 
     showMainInterface() {
         document.getElementById('mainInterface').classList.remove('hidden');
+        // Also hide the project selection modal
+        document.getElementById('projectSelectionModal').classList.add('hidden');
+        document.getElementById('projectSelectionModal').classList.remove('flex');
     }
 
     hideMainInterface() {
