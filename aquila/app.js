@@ -76,6 +76,7 @@ class AquilaApp {
         
         // Document selection
         document.getElementById('documentSelect').addEventListener('change', async (e) => {
+            console.log('Document selection changed to:', e.target.value);
             this.currentDocument = e.target.value;
             
             // Load document plan if available
