@@ -590,9 +590,26 @@ class AquilaApp {
                 <div class="type">${module.type}</div>
             `;
             
-            moduleElement.addEventListener('click', () => this.selectModule(module, moduleElement));
+            // Add click event listener with explicit binding and debugging
+            const clickHandler = (event) => {
+                console.log('Module clicked:', module.title, module.dmc);
+                event.preventDefault();
+                event.stopPropagation();
+                this.selectModule(module, moduleElement);
+            };
+            
+            moduleElement.addEventListener('click', clickHandler);
+            
+            // Also add some visual feedback
+            moduleElement.addEventListener('mouseenter', () => {
+                console.log('Mouse entered module:', module.title);
+            });
+            
             container.appendChild(moduleElement);
+            console.log('Module added to DOM:', module.title);
         });
+        
+        console.log('All modules rendered. Total:', modules.length);
     }
 
     selectModule(module, element) {
