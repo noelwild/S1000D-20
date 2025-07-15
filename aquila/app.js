@@ -613,15 +613,21 @@ class AquilaApp {
     }
 
     selectModule(module, element) {
+        console.log('selectModule called with:', module.title, module.dmc);
+        
         // Update active state
         document.querySelectorAll('.module-item').forEach(item => {
             item.classList.remove('active');
         });
         element.classList.add('active');
         
+        console.log('Active state updated for:', module.title);
+        
         this.currentModule = module;
         this.updateContentArea();
         this.updateModuleInfo();
+        
+        console.log('Module selection complete');
     }
 
     updateContentArea() {
