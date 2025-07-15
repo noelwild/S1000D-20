@@ -596,10 +596,14 @@ class AquilaApp {
             
             // Add click event listener with explicit binding and debugging
             const clickHandler = (event) => {
+                console.log('=== MODULE CLICK EVENT ===');
                 console.log('Module clicked:', module.title, module.dmc);
+                console.log('Event target:', event.target);
+                console.log('Event current target:', event.currentTarget);
                 event.preventDefault();
                 event.stopPropagation();
                 this.selectModule(module, moduleElement);
+                console.log('=== END MODULE CLICK EVENT ===');
             };
             
             moduleElement.addEventListener('click', clickHandler);
