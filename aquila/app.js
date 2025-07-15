@@ -621,7 +621,10 @@ class AquilaApp {
     }
 
     selectModule(module, element) {
+        console.log('=== SELECT MODULE CALLED ===');
         console.log('selectModule called with:', module.title, module.dmc);
+        console.log('Module object:', module);
+        console.log('Element:', element);
         
         // Update active state
         document.querySelectorAll('.module-item').forEach(item => {
@@ -632,10 +635,13 @@ class AquilaApp {
         console.log('Active state updated for:', module.title);
         
         this.currentModule = module;
+        console.log('Current module set to:', this.currentModule.title);
+        
         this.updateContentArea();
         this.updateModuleInfo();
         
         console.log('Module selection complete');
+        console.log('=== END SELECT MODULE ===');
     }
 
     updateContentArea() {
