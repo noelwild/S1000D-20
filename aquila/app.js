@@ -647,9 +647,13 @@ class AquilaApp {
     updateContentArea() {
         console.log('=== UPDATE CONTENT AREA ===');
         const contentArea = document.getElementById('contentArea');
-        console.log('Content area element:', contentArea);
-        console.log('Current module:', this.currentModule);
-        console.log('Is STE view:', this.isSTEView);
+        console.log('Content area element found:', !!contentArea);
+        console.log('Current module exists:', !!this.currentModule);
+        
+        if (!contentArea) {
+            console.error('ERROR: contentArea element not found!');
+            return;
+        }
         
         if (!this.currentModule) {
             console.log('No current module, showing placeholder');
@@ -665,21 +669,52 @@ class AquilaApp {
             return;
         }
         
+        console.log('Module title:', this.currentModule.title);
+        console.log('Module STE content:', this.currentModule.ste_content);
+        console.log('Module verbatim content:', this.currentModule.verbatim_content);
+        console.log('Is STE view:', this.isSTEView);
+        
         const content = this.isSTEView ? this.currentModule.ste_content : this.currentModule.verbatim_content;
-        console.log('Content to display:', content);
+        console.log('Selected content:', content);
         
-        const formattedContent = this.formatContent(content);
-        console.log('Formatted content:', formattedContent);
-        
-        contentArea.innerHTML = `
-            <div class="content-editor">
-                <div class="prose prose-invert max-w-none">
-                    ${formattedContent}
+        if (!content) {
+            console.error('ERROR: No content found for module!');
+            contentArea.innerHTML = `
+                <div class="content-editor">
+                    <div class="prose prose-invert max-w-none">
+                        <p class="text-red-400">Error: No content available for this module</p>
+                        <p class="text-gray-400">Module: ${this.currentModule.title}</p>
+                    </div>
                 </div>
-            </div>
-        `;
+            `;
+            return;
+        }
         
-        console.log('Content area updated');
+        try {
+            const formattedContent = this.formatContent(content);
+            console.log('Formatted content:', formattedContent);
+            
+            contentArea.innerHTML = `
+                <div class="content-editor">
+                    <div class="prose prose-invert max-w-none">
+                        ${formattedContent}
+                    </div>
+                </div>
+            `;
+            
+            console.log('Content area updated successfully');
+        } catch (error) {
+            console.error('ERROR formatting content:', error);
+            contentArea.innerHTML = `
+                <div class="content-editor">
+                    <div class="prose prose-invert max-w-none">
+                        <p class="text-red-400">Error displaying content: ${error.message}</p>
+                        <p class="text-gray-400">Raw content: ${content}</p>
+                    </div>
+                </div>
+            `;
+        }
+        
         console.log('=== END UPDATE CONTENT AREA ===');
     }
 
